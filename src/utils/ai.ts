@@ -90,9 +90,9 @@ export const defaultSettings: Settings = {
 };
 
 export const modelsByProvider = {
-  openai: ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo'],
-  anthropic: ['claude-3-7-sonnet-20250219', 'claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022'],
-  gemini: ['gemini-1.5-pro', 'gemini-1.5-flash']
+  openai: ['gpt-4o-mini', 'gpt-4o', 'gpt-4.1-mini', 'gpt-4.1'],
+  anthropic: ['claude-sonnet-4-6', 'claude-opus-4-8', 'claude-haiku-4-5'],
+  gemini: ['gemini-2.5-flash', 'gemini-2.5-pro', 'gemini-2.0-flash']
 };
 
 export async function evaluateAnswer(
@@ -100,12 +100,17 @@ export async function evaluateAnswer(
   answer: string,
   settings: Settings
 ): Promise<EvaluationResponse> {
-  const { provider, model, systemPrompt, apiKeys } = settings;
+  const { provider, systemPrompt, apiKeys } = settings;
   const apiKey = apiKeys[provider];
 
   if (!apiKey) {
     throw new Error(`API Key for ${provider} is missing. Please set it in Settings.`);
   }
+
+  // Guard against a stale/invalid model persisted in localStorage (e.g. a retired
+  // model ID) overriding the current list — fall back to the provider's default.
+  const validModels = modelsByProvider[provider];
+  const model = validModels.includes(settings.model) ? settings.model : validModels[0];
 
   const promptMessage = `Question:\n${question}\n\nAnswer:\n${answer}`;
 

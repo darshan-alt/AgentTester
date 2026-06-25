@@ -15,7 +15,11 @@ export const SettingsModal: React.FC<Props> = ({ isOpen, onClose, settings, onSe
 
   useEffect(() => {
     if (isOpen) {
-      setLocalSettings(settings);
+      // Coerce a stale/invalid persisted model onto the current list so the
+      // dropdown shows a valid selection (and Save persists the corrected value).
+      const models = modelsByProvider[settings.provider];
+      const model = models.includes(settings.model) ? settings.model : models[0];
+      setLocalSettings({ ...settings, model });
     }
   }, [isOpen, settings]);
 
