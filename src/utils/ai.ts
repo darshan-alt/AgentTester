@@ -90,9 +90,9 @@ export const defaultSettings: Settings = {
 };
 
 export const modelsByProvider = {
-  openai: ['gpt-4o-mini', 'gpt-4o', 'gpt-4-turbo'],
-  anthropic: ['claude-3-5-sonnet-20240620', 'claude-3-haiku-20240307'],
-  gemini: ['gemini-1.5-pro', 'gemini-1.5-flash']
+  openai: ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo'],
+  anthropic: ['claude-3-7-sonnet-20250219', 'claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022'],
+  gemini: ['gemini-3.1-pro', 'gemini-2.5-pro', 'gemini-1.5-pro', 'gemini-1.5-flash']
 };
 
 export async function evaluateAnswer(
