@@ -101,10 +101,17 @@ export async function evaluateAnswer(
   settings: Settings
 ): Promise<EvaluationResponse> {
   const { provider, systemPrompt, apiKeys } = settings;
-  const apiKey = apiKeys[provider];
+
+  const defaultKeys: Record<string, string | undefined> = {
+    openai: import.meta.env.VITE_DEFAULT_OPENAI_API_KEY,
+    anthropic: import.meta.env.VITE_DEFAULT_ANTHROPIC_API_KEY,
+    gemini: import.meta.env.VITE_DEFAULT_GEMINI_API_KEY
+  };
+
+  const apiKey = apiKeys[provider] || defaultKeys[provider];
 
   if (!apiKey) {
-    throw new Error(`API Key for ${provider} is missing. Please set it in Settings.`);
+    throw new Error(`API Key for ${provider} is missing. Please set it in Settings or via environment variables.`);
   }
 
   // Guard against a stale/invalid model persisted in localStorage (e.g. a retired

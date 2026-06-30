@@ -82,7 +82,7 @@ export const SettingsModal: React.FC<Props> = ({ isOpen, onClose, settings, onSe
           <div>
             <h3>API Keys</h3>
             <p className="text-sm text-secondary mb-4">
-              Keys are stored locally in your browser and never sent anywhere except directly to the provider.
+              Keys are stored locally in your browser and never sent anywhere except directly to the provider. Leave blank to use the system default key if configured.
             </p>
             
             <div className="flex-col">
@@ -92,6 +92,8 @@ export const SettingsModal: React.FC<Props> = ({ isOpen, onClose, settings, onSe
                   type="password" 
                   value={localSettings.apiKeys.openai} 
                   onChange={e => handleApiKeyChange('openai', e.target.value)}
+                  onCopy={e => e.preventDefault()}
+                  onCut={e => e.preventDefault()}
                   placeholder="sk-..."
                 />
               </div>
@@ -101,6 +103,8 @@ export const SettingsModal: React.FC<Props> = ({ isOpen, onClose, settings, onSe
                   type="password" 
                   value={localSettings.apiKeys.anthropic} 
                   onChange={e => handleApiKeyChange('anthropic', e.target.value)}
+                  onCopy={e => e.preventDefault()}
+                  onCut={e => e.preventDefault()}
                   placeholder="sk-ant-..."
                 />
               </div>
@@ -110,6 +114,8 @@ export const SettingsModal: React.FC<Props> = ({ isOpen, onClose, settings, onSe
                   type="password" 
                   value={localSettings.apiKeys.gemini} 
                   onChange={e => handleApiKeyChange('gemini', e.target.value)}
+                  onCopy={e => e.preventDefault()}
+                  onCut={e => e.preventDefault()}
                   placeholder="AIza..."
                 />
               </div>
